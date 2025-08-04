@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import tech.vedansh.blogapp.dto.ApiResponse;
 import tech.vedansh.blogapp.dto.BlogResponseDTO;
+import tech.vedansh.blogapp.enums.Role;
 import tech.vedansh.blogapp.model.BlogModel;
 import tech.vedansh.blogapp.model.UserModel;
 import tech.vedansh.blogapp.repository.BlogRepository;
@@ -67,8 +68,14 @@ public class BlogServiceImpl implements BlogService {
     public ApiResponse<BlogResponseDTO> updateBlogFields(Long id, String email, Map<String, String> updates, MultipartFile image) {
         BlogModel blog = blogRepo.findById(id).orElseThrow(() -> new RuntimeException("Blog not found"));
 
-        if (!blog.getAuthor().getEmail().equals(email)) {
-            throw new RuntimeException("Unauthorized to update this blog");
+        UserModel user = userRepo.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
+
+        boolean isOwner = blog.getAuthor().getEmail().equals(email);
+        boolean isAdmin = user.getRole() == Role.ROLE_ADMIN;
+
+        if (!isOwner && !isAdmin) {
+            throw new RuntimeException("You are not allowed to modify this blog");
         }
 
         if (updates.containsKey("title")) {
@@ -102,8 +109,14 @@ public class BlogServiceImpl implements BlogService {
     public ApiResponse<String> deleteBlog(Long id, String email) {
         BlogModel blog = blogRepo.findById(id).orElseThrow(()->new RuntimeException("Blog Not Found"));
 
-        if(!blog.getAuthor().getEmail().equals(email)){
-            throw new RuntimeException("Unauthorized to delete this blog");
+        UserModel user = userRepo.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
+
+        boolean isOwner = blog.getAuthor().getEmail().equals(email);
+        boolean isAdmin = user.getRole() == Role.ROLE_ADMIN;
+
+        if (!isOwner && !isAdmin) {
+            throw new RuntimeException("You are not allowed to delete this blog");
         }
         blogRepo.delete(blog);
 

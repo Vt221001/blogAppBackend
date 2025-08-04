@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import tech.vedansh.blogapp.enums.Role;
 
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -38,5 +40,8 @@ public class UserModel {
 
     @Column(nullable = false)
     private boolean enabled = true;
+
+    @OneToMany(mappedBy = "author",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BlogModel> blogs;
 
 }

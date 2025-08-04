@@ -5,7 +5,7 @@ import tech.vedansh.blogapp.model.UserModel;
 
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<UserModel,Integer> {
+public interface UserRepository extends JpaRepository<UserModel,Long> {
 
     Optional<UserModel> findByEmail(String username);
 }

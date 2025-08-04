@@ -14,8 +14,8 @@ public interface UserService {
     ApiResponse<JwtAuthResponse> register(UserRegisterRequest request);
     ApiResponse<JwtAuthResponse> login(UserLoginRequest request);
     ApiResponse<List<UserModel>> getAll();
-    ApiResponse<UserModel> deleteUser(int id);
-    ApiResponse<UserModel> getUser(int id);
-    ApiResponse<UserModel> updateUser(int id, UserModel userModel);
+    ApiResponse<UserModel> deleteUser(Long id);
+    ApiResponse<UserModel> getUser(Long id);
+    ApiResponse<UserModel> updateUser(Long id, UserModel userModel);
 }
 

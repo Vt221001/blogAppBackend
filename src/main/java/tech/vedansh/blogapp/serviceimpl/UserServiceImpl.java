@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    public ApiResponse<UserModel> deleteUser(int id) {
+    public ApiResponse<UserModel> deleteUser(Long id) {
         UserModel user = userRepository.findById(id).orElse(null);
 
         if (user == null) {
@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    public ApiResponse<UserModel> getUser(int id) {
+    public ApiResponse<UserModel> getUser(Long id) {
 
         UserModel user = userRepository.findById(id).orElse(null);
         if (user == null) {
@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ApiResponse<UserModel> updateUser(int id, UserModel updatedUser) {
+    public ApiResponse<UserModel> updateUser(Long id, UserModel updatedUser) {
         UserModel existingUser = userRepository.findById(id).orElse(null);
 
         if (existingUser == null) {

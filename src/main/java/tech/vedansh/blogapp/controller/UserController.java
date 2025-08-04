@@ -42,20 +42,20 @@ public class UserController {
 
     @PreAuthorize(("hasRole('ADMIN')"))
     @DeleteMapping("/user/{id}")
-    public ResponseEntity<ApiResponse<UserModel>> deleteUser(@PathVariable int id) {
+    public ResponseEntity<ApiResponse<UserModel>> deleteUser(@PathVariable Long id) {
         return ResponseEntity.ok(userService.deleteUser(id));
 
     }
 
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<ApiResponse<UserModel>> getUserById(@PathVariable int id) {
+    public ResponseEntity<ApiResponse<UserModel>> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUser(id));
     }
 
 
     @PutMapping("/user/{id}")
-    public ResponseEntity<ApiResponse<UserModel>> updateUser(@PathVariable int id, @RequestBody UserModel userModel) {
+    public ResponseEntity<ApiResponse<UserModel>> updateUser(@PathVariable Long id, @RequestBody UserModel userModel) {
         return ResponseEntity.ok(userService.updateUser(id,userModel));
     }
 
